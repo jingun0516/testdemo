@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+  <meta charset="UTF-8">
+  <title th:text="${pageTitle} ?: '사이트 기본 제목'">사이트 기본 제목</title>
+  <link rel="stylesheet" th:href="@{/css/common.css}">
+</head>
+<body>
+<div th:replace="fragments/header :: headerFragment"></div>
+
+<!-- content fragment가 들어갈 위치 -->
+<main layout:fragment="content"></main>
+
+<div th:replace="fragments/footer :: footerFragment"></div>
+</body>
+</html>
