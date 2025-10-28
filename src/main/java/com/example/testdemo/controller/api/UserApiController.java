@@ -17,7 +17,7 @@ public class UserApiController {
 
     @PostMapping("/insert")
     public ResponseEntity<User> insert(@RequestBody User user) {
-        User savedUser = userService.insert(user);
+        User savedUser = userService.save(user);
         return ResponseEntity.status(HttpStatus.CREATED).body(savedUser);
     }
 
@@ -39,9 +39,9 @@ public class UserApiController {
 
     // 삭제
     @DeleteMapping("/{id}")
-    public ResponseEntity<User> delete(@PathVariable Long id) {
-        User deletedUser = userService.delete(id);
-        return ResponseEntity.ok(deletedUser);
+    public ResponseEntity<Void> delete(@PathVariable Long id) {
+        userService.delete(id);
+        return ResponseEntity.ok().build();
     }
 
 }

@@ -3,15 +3,17 @@ package com.example.testdemo.service.impl;
 import com.example.testdemo.entity.User;
 import com.example.testdemo.repository.UserRepository;
 import com.example.testdemo.service.UserService;
-import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 @Service
-@RequiredArgsConstructor
-public class UserServiceImpl implements UserService {
+public class UserServiceImpl extends BaseServiceImpl<User, Long> implements UserService {
 
     private final UserRepository userRepository;
+
+    public UserServiceImpl(UserRepository userRepository) {
+        super(userRepository);
+        this.userRepository = userRepository;
+    }
 
     @Override
     public User login(String loginId, String password) {
@@ -28,16 +30,6 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User getById(Long id) {
-        return userRepository.findById(id).orElse(null);
-    }
-
-    @Override
-    public User insert(User user) {
-        return userRepository.save(user);
-    }
-
-    @Override
     public User update(Long id, User newUser) {
         User user = getById(id);
 
@@ -50,16 +42,6 @@ public class UserServiceImpl implements UserService {
         if(newUser.getPassword() != null) {
             user.setPassword(newUser.getPassword());
         }
-        return userRepository.save(user);
-    }
-
-    @Transactional
-    @Override
-    public User delete(Long id) {
-        User user = getById(id);
-        if(user != null) {
-            userRepository.delete(user);
-        }
-        return user;
+        return super.save(user);
     }
 }
